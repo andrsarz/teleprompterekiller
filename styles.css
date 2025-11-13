@@ -1,0 +1,159 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  background-color: black;
+  color: white; /* Ensure text is visible against the black background */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px; /* Added padding for spacing */
+  background-color: black;
+  
+}
+
+.top-controls {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  justify-content: space-between; /* Better space distribution */
+  padding: 10px;
+  
+}
+
+.control-box {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin: 0 10px; /* Adjusted margin for alignment */
+  flex: 1 1 auto; /* Allows boxes to grow and shrink */
+  border-radius: 5px; /* Added for rounded corners */
+}
+
+.text-box {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  margin-top: 20px; /* Adjusted margin for better spacing */
+  flex-grow: 1;
+  text-align: center;
+  border-radius: 5px; /* Added for rounded corners */
+  max-height: 80vh; /* Adjust based on your layout; vh units make it responsive */
+  overflow-y: auto; /* Allows for vertical scrolling */
+}
+
+/* Timer and stopwatch styles */
+#timer-container, #stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#timer-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+input[type="number"] {
+  margin: 0 5px;
+  padding: 10px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Added for rounded corners */
+  text-align: center;
+}
+
+button {
+  margin: 0 5px;
+  padding: 10px;
+  background-color: #555;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; /* Added for rounded corners */
+}
+
+button:hover {
+  background-color: #777; /* Added hover effect */
+}
+
+button:focus {
+  outline: none;
+}
+
+#text-output {
+  font-size: 2em;
+  margin-top: 10px; /* Spacing above the display */
+}
+
+#options {
+  display: flex;
+  justify-content: center; /* Aligns items on the main-axis (horizontal by default) */
+  align-items: center; /* Aligns items on the cross-axis (vertical if the main-axis is horizontal) */
+}
+
+#stopclock{
+  display: flex;
+  justify-content: center; /* Aligns items on the main-axis (horizontal by default) */
+  align-items: center; /* Aligns items on the cross-axis (vertical if the main-axis is horizontal) */
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: black; /* Dark background */
+  color: white; /* Light text for contrast */
+  font-size: 1rem;
+  position: relative; /* Makes the footer always visible at the bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Custom scrollbar for the whole page */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: #333; /* Color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: black; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Optional: Rounds the corners of the scrollbar thumb */
+  border: 3px solid #333; /* Optional: Creates a border inside the track */
+}
+
+/* Custom scrollbar for the #text-box */
+.text-box::-webkit-scrollbar {
+  width: 12px; /* Adjust scrollbar width specific to .text-box */
+}
+
+.text-box::-webkit-scrollbar-track {
+  background: #333; /* Color of the scrollbar track specific to .text-box */
+}
+
+.text-box::-webkit-scrollbar-thumb {
+  background-color: black; /* Color of the scrollbar thumb specific to .text-box */
+  border-radius: 6px; /* Optional: Rounds the corners of the scrollbar thumb specific to .text-box */
+  border: 3px solid #333; /* Optional: Creates a border inside the track specific to .text-box */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .top-controls {
+      flex-direction: column;
+  }
+
+  .control-box {
+      margin-bottom: 20px; /* Increased spacing on mobile */
+      width: 100%; /* Full width on mobile */
+  }
+}
+
