@@ -558,3 +558,21 @@ document.getElementById('s_restart').addEventListener('click', function() {
   resetTeleprompter(); // Assume this function resets the teleprompter
   resetStopwatch();
 });
+
+// --- FULLSCREEN ONLY TEXT --- //
+document.addEventListener('DOMContentLoaded', () => {
+  const fsBtn = document.getElementById('s_fullscreen'); 
+  const textArea = document.getElementById('play_div'); // area che va fullscreen
+
+  if (!fsBtn || !textArea) return;
+
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      textArea.requestFullscreen().catch(err => console.error(err));
+      document.getElementById('s_fullscreen_img').src = "icons/fullscreen-black.svg";
+    } else {
+      document.exitFullscreen();
+      document.getElementById('s_fullscreen_img').src = "icons/fullscreen-white.svg";
+    }
+  });
+});
