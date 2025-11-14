@@ -485,15 +485,38 @@ class Teleprompter {
       document.getElementById('play_div').style.display = 'block';
       document.getElementById('edit_text_div').style.display = 'none';
       if (this.play) {
+        // Trova il blocco di testo "di riferimento" (come prima)
         let scrollToElem = document.getElementById(`word_${this.currentPosition}`);
+        if (!scrollToElem) return;
+
         let top = scrollToElem.getBoundingClientRect().top;
         let i = this.currentPosition;
         while (++i < this.numWordSpans) {
-          scrollToElem = document.getElementById(`word_${i}`);
-          if (Math.abs(scrollToElem.getBoundingClientRect().top - top) >= this.size)
+          const candidate = document.getElementById(`word_${i}`);
+          if (!candidate) break;
+          if (Math.abs(candidate.getBoundingClientRect().top - top) >= this.size) {
+            scrollToElem = candidate;
             break;
+          }
         }
-        scrollToElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Linea di lettura (se esiste)
+        const readingLine = document.getElementById('reading_line');
+
+        if (readingLine) {
+          const wordRect = scrollToElem.getBoundingClientRect();
+          const lineRect = readingLine.getBoundingClientRect();
+          const delta = wordRect.top - lineRect.top;
+
+          // Sposta la pagina in modo che la parola vada sulla linea
+          window.scrollBy({
+            top: delta,
+            behavior: 'smooth'
+          });
+        } else {
+          // fallback: comportamento originale
+          scrollToElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
     }
   }
