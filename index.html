@@ -22,7 +22,10 @@
     </div>
     
     <div id="options" class="control-box">
-      
+   <div class="reading-line-controls">
+    <label for="reading_line_range">Linea di lettura</label>
+    <input type="range" id="reading_line_range" min="10" max="90" value="50">
+  </div>     
 
 
 <div id="settings">
@@ -115,7 +118,11 @@
       
     </div></div>
 
-    <div id="play_div"><span id="play_text"></span></div>
+      <div id="play_div">
+    <div id="reading_line"></div>
+    <span id="play_text"></span>
+  </div>
+
     <div id="edit_text_div"><div id="text_editor_container"><textarea id="text_editor" cols="80" rows="50"></textarea></div></div>
     <div id="rec_text">
       <div class="txt_cmp_header">
@@ -161,6 +168,21 @@
       // window.setTimeout(() => rec.stop(), 10000);
     }
   </script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const line  = document.getElementById('reading_line');        // la riga
+  const range = document.getElementById('reading_line_range');  // lo slider
+
+  if (!line || !range) return;
+
+  const updateLine = () => {
+    line.style.top = range.value + '%';
+  };
+
+  range.addEventListener('input', updateLine);
+  updateLine(); // applica la posizione iniziale
+});
+</script>
   <footer>
     Teleprompter Ekiller
   </footer>
