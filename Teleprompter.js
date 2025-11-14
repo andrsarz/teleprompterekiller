@@ -135,13 +135,28 @@ class Teleprompter {
           editElement += `<option value="${i}"${sel}>${this.langValues[i][0]}</option>`;
         }
         editElement += `</select><span id="editor_${setting}_refine"></span>`;
-      } else if (typeof this[setting] === 'number') {
+            } else if (typeof this[setting] === 'number') {
         editElement += `<input type="number" id="editor_${setting}" value="${this[setting]}" />`;
       } else if (typeof this[setting] === 'string') {
         editElement += `<input type="text" id="editor_${setting}" value="${this[setting]}" />`;
       } else if (typeof this[setting] === 'object') {
-        editElement += `<input type="text" id="editor_${setting}" value="${this[setting].join(', ')}" />`;
+        // Caso speciale: colori di sfondo (bg) e testo (fg)
+        if (setting === 'bg' || setting === 'fg') {
+          const [r, g, b] = this[setting];
+          const toHex = v => v.toString(16).padStart(2, '0');
+          const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+
+          // Mostriamo SOLO il color picker, il campo testuale lo teniamo nascosto
+          editElement += `
+            <input type="color" id="editor_${setting}_color" value="${hex}" />
+            <input type="text" id="editor_${setting}" value="${this[setting].join(', ')}" style="display:none" />
+          `;
+        } else {
+          // Altri oggetti (se mai ce ne fossero) restano testuali
+          editElement += `<input type="text" id="editor_${setting}" value="${this[setting].join(', ')}" />`;
+        }
       }
+
       const newDiv = document.createElement('div');
       newDiv.setAttribute('id', 'editor_div');
       newDiv.style.zIndex = '21';
@@ -153,11 +168,31 @@ class Teleprompter {
           <img src="icons/${setting}-${rgbToLum(...this.bg) < 0.5 ? 'white' : 'black'}.svg" class="s_img" id="edit_s_${setting}_img" />
         </div>${editElement}
       </div></div>`;
-      document.body.appendChild(newDiv);
+            document.body.appendChild(newDiv);
       document.getElementById('disable_block').style.display = 'block';
+
+      // Listener standard sul campo "nascosto" o testuale
       document.getElementById(`editor_${setting}`).addEventListener('change', () => this.editChange(setting));
+
+      // Se è un colore (bg o fg), colleghiamo anche il color picker
+      if ((setting === 'bg' || setting === 'fg') && document.getElementById(`editor_${setting}_color`)) {
+        const colorInput = document.getElementById(`editor_${setting}_color`);
+        colorInput.addEventListener('input', () => {
+          const hex = colorInput.value; // es: #RRGGBB
+          if (hex && hex.length === 7) {
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+            // aggiorna il campo nascosto con "R, G, B"
+            document.getElementById(`editor_${setting}`).value = `${r}, ${g}, ${b}`;
+            this.editChange(setting); // riusa TUTTA la logica esistente (localStorage, warning, UI, ecc.)
+          }
+        });
+      }
+
       if (setting == 'lang')
         this.adaptLanguageSelector();
+
     }
   }
 
