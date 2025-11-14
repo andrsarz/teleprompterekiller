@@ -1,11 +1,9 @@
 
-const DEFAULT_TEXT_EN = `Hi, this is Tony Stark, and this application is called Echo-Prompt. Picture this: you're gearing up for a high-stakes presentation—maybe unveiling the latest Stark Industries innovation or addressing the United Nations. What you need is not just any teleprompter; you need Echo-Prompt, the future of seamless presentation technology, designed for the modern speaker who demands perfection.
-
-In the heart of my workshop, amidst suits of armor and groundbreaking tech, I've seen the power of effective communication. That's where Echo-Prompt shines. Utilizing cutting-edge WebSpeech API, it offers real-time speech recognition, allowing you to control your presentation flow with just your voice. Imagine standing on stage, captivating your audience, with the freedom to navigate your script effortlessly—no clickers, no distractions, just you and your words in perfect harmony.
-
-But Echo-Prompt isn't just about voice activation. It's about customization that fits your unique style. Whether you're presenting in a dimly lit room or under the bright lights of a press conference, Echo-Prompt lets you adjust text size, font, and colors for optimal readability. And for those who appreciate the finer details, it offers features like vertical and horizontal mirroring, ensuring your presentation looks as good from the back with a reflective teleprompter as it does from the front.
-
-Developed with the same principle I apply to all my creations—making the impossible possible—Echo-Prompt is here to revolutionize the way we communicate. Whether you're a CEO, a world leader, or a superhero, it's designed to ensure your message isn't just heard, but felt. So, suit up, and let Echo-Prompt take your presentations to new heights.`.replace(/([^\r\n])\r?\n([^\r\n])/gm, '$1 $2');
+const DEFAULT_TEXT_EN = `La comunicazione efficace nasce dalla chiarezza.
+Quando le idee scorrono senza interruzioni, anche le parole trovano il loro ritmo naturale.
+Un buon discorso non è solo una sequenza di frasi: è un viaggio che accompagna chi ascolta.
+Ogni pausa, ogni respiro, ogni cambio di tono aiuta a guidare l'attenzione del pubblico.
+La lettura scorrevole permette alla voce di diventare uno strumento preciso, naturale e sicuro.`.replace(/([^\r\n])\r?\n([^\r\n])/gm, '$1 $2');
 
 const DEFAULT_TEXT_DE = `Hallo, ich bin Tony Stark, und diese Anwendung heißt Echo-Prompt. Stell dir vor: Du bereitest dich auf eine Präsentation von höchster Wichtigkeit vor – vielleicht die Enthüllung der neuesten Innovation von Stark Industries oder eine Ansprache bei den Vereinten Nationen. Was du brauchst, ist nicht irgendein Teleprompter; du brauchst Echo-Prompt, die Zukunft nahtloser Präsentationstechnologie, entworfen für den modernen Redner, der Perfektion verlangt.
 
