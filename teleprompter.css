@@ -171,9 +171,10 @@
 }
 
 #play_div:fullscreen {
-  padding: 0 !important;
-  margin: 0 !important;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  box-sizing: border-box;
+  /* niente padding / margin qui:
+     lasciamo che li gestisca il Teleprompter in JS */
 }
