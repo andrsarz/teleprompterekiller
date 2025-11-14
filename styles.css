@@ -34,18 +34,16 @@ body, html {
 }
 
 .text-box {
-  /* lo sfondo lo gestisce il JS con bg */
-  background-color: transparent;
+  background-color: #333;
   color: white;
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 20px; /* Adjusted margin for better spacing */
   flex-grow: 1;
   text-align: center;
-  border-radius: 5px;
-  max-height: 80vh;
-  overflow-y: auto;
+  border-radius: 5px; /* Added for rounded corners */
+  max-height: 80vh; /* Adjust based on your layout; vh units make it responsive */
+  overflow-y: auto; /* Allows for vertical scrolling */
 }
-
 
 /* Timer and stopwatch styles */
 #timer-container, #stopwatch {
