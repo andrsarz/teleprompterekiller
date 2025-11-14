@@ -426,9 +426,6 @@ class Teleprompter {
       }
     }
     document.getElementById('play_div').style.paddingLeft = `${this.margin}px`;
-    // OFFSET DI PARTENZA PER CENTRARE IL TESTO
-const viewportHeight = window.innerHeight;
-document.getElementById('play_div').style.paddingTop = (viewportHeight * 0.35) + "px";
     document.getElementById('play_div').style.paddingRight = `${this.margin}px`;
     document.getElementById('edit_text_div').style.paddingLeft = `${this.margin}px`;
     document.getElementById('edit_text_div').style.paddingRight = `${this.margin}px`;
