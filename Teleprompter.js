@@ -91,11 +91,11 @@ class Teleprompter {
     this.currentPosition = 0;
   }
 
-  settingsClick(setting) {
+    settingsClick(setting) {
     if (setting == 'play') {
       if (!this.edit) {
-        if (this.play) { this.pause();pauseStopwatch();}
-        else {this.start();startStopwatch();}
+        if (this.play) { this.pause(); pauseStopwatch(); }
+        else { this.start(); startStopwatch(); }
       }
       this.applySettings();
     } else if (setting == 'restart') {
@@ -108,8 +108,9 @@ class Teleprompter {
         this.text = document.getElementById('text_editor').value;
         this.adaptText();
         this.edit = false;
-      } else
+      } else {
         this.edit = true;
+      }
       this.applySettings();
     } else if (setting == 'clear') {
       this.stop();
@@ -118,10 +119,18 @@ class Teleprompter {
     } else if (typeof this[setting] === 'boolean') {
       this[setting] = !this[setting];
       this.applySettings();
-    } else if (typeof this[setting] === 'number' || typeof this[setting] === 'string' || typeof this[setting] === 'object') {
+    } else if (
+      typeof this[setting] === 'number' ||
+      typeof this[setting] === 'string' ||
+      typeof this[setting] === 'object'
+    ) {
       this.pause();
-      const position = document.getElementById(`s_${setting}`).getBoundingClientRect();
+      const position = document
+        .getElementById(`s_${setting}`)
+        .getBoundingClientRect();
       let editElement = '';
+
+      // --- SELEZIONE LINGUA (come prima) ---
       if (setting == 'lang') {
         editElement += `<select id="editor_${setting}">`;
         for (let i = 0; i < this.langValues.length; i++) {
@@ -135,28 +144,35 @@ class Teleprompter {
           editElement += `<option value="${i}"${sel}>${this.langValues[i][0]}</option>`;
         }
         editElement += `</select><span id="editor_${setting}_refine"></span>`;
-            } else if (typeof this[setting] === 'number') {
+
+      // --- NUMERICI (size, margin, ecc.) ---
+      } else if (typeof this[setting] === 'number') {
         editElement += `<input type="number" id="editor_${setting}" value="${this[setting]}" />`;
+
+      // --- STRINGHE (font, ecc.) ---
       } else if (typeof this[setting] === 'string') {
         editElement += `<input type="text" id="editor_${setting}" value="${this[setting]}" />`;
+
+      // --- OGGETTI (QUI CI CADONO bg e fg) ---
       } else if (typeof this[setting] === 'object') {
-        // Caso speciale: colori di sfondo (bg) e testo (fg)
         if (setting === 'bg' || setting === 'fg') {
+          // this.bg / this.fg = [r, g, b]
           const [r, g, b] = this[setting];
           const toHex = v => v.toString(16).padStart(2, '0');
           const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 
-          // Mostriamo SOLO il color picker, il campo testuale lo teniamo nascosto
+          // Color picker visibile + campo testuale nascosto
           editElement += `
             <input type="color" id="editor_${setting}_color" value="${hex}" />
             <input type="text" id="editor_${setting}" value="${this[setting].join(', ')}" style="display:none" />
           `;
         } else {
-          // Altri oggetti (se mai ce ne fossero) restano testuali
+          // altri eventuali oggetti -> testo normale
           editElement += `<input type="text" id="editor_${setting}" value="${this[setting].join(', ')}" />`;
         }
       }
 
+      // --- COSTRUZIONE POPUP (come prima, con il nuovo editElement) ---
       const newDiv = document.createElement('div');
       newDiv.setAttribute('id', 'editor_div');
       newDiv.style.zIndex = '21';
@@ -168,14 +184,20 @@ class Teleprompter {
           <img src="icons/${setting}-${rgbToLum(...this.bg) < 0.5 ? 'white' : 'black'}.svg" class="s_img" id="edit_s_${setting}_img" />
         </div>${editElement}
       </div></div>`;
-            document.body.appendChild(newDiv);
+      document.body.appendChild(newDiv);
       document.getElementById('disable_block').style.display = 'block';
 
-      // Listener standard sul campo "nascosto" o testuale
-      document.getElementById(`editor_${setting}`).addEventListener('change', () => this.editChange(setting));
+      // Listener standard sul campo (anche se è nascosto per bg/fg)
+      const mainEditor = document.getElementById(`editor_${setting}`);
+      if (mainEditor) {
+        mainEditor.addEventListener('change', () => this.editChange(setting));
+      }
 
-      // Se è un colore (bg o fg), colleghiamo anche il color picker
-      if ((setting === 'bg' || setting === 'fg') && document.getElementById(`editor_${setting}_color`)) {
+      // Se è un colore (bg / fg), colleghiamo il picker
+      if (
+        (setting === 'bg' || setting === 'fg') &&
+        document.getElementById(`editor_${setting}_color`)
+      ) {
         const colorInput = document.getElementById(`editor_${setting}_color`);
         colorInput.addEventListener('input', () => {
           const hex = colorInput.value; // es: #RRGGBB
@@ -185,16 +207,16 @@ class Teleprompter {
             const b = parseInt(hex.substr(5, 2), 16);
             // aggiorna il campo nascosto con "R, G, B"
             document.getElementById(`editor_${setting}`).value = `${r}, ${g}, ${b}`;
-            this.editChange(setting); // riusa TUTTA la logica esistente (localStorage, warning, UI, ecc.)
+            this.editChange(setting); // riusa tutta la logica esistente
           }
         });
       }
 
       if (setting == 'lang')
         this.adaptLanguageSelector();
-
     }
   }
+
 
   wordClick(numWord) {
     if (this.play) {
