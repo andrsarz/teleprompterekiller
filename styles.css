@@ -157,19 +157,3 @@ footer {
   }
 }
 
-.reading-line-controls {
-  margin: 10px auto;
-  max-width: 400px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-}
-
-.reading-line-controls label {
-  white-space: nowrap;
-}
-
-.reading-line-controls input[type="range"] {
-  flex: 1;
-}
