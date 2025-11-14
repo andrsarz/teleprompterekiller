@@ -161,6 +161,27 @@
       // window.setTimeout(() => rec.stop(), 10000);
     }
   </script>
+  <script>
+  document.addEventListener('keydown', function (e) {
+    // Barra spaziatrice: gestiamo varie possibilità
+    const isSpace =
+      e.code === 'Space' ||
+      e.key === ' ' ||
+      e.key === 'Spacebar';
+
+    if (!isSpace) return;
+
+    // Attiviamo solo quando siamo in fullscreen
+    if (document.fullscreenElement) {
+      e.preventDefault(); // evita lo scroll della pagina
+
+      const playBtn = document.getElementById('s_play');
+      if (playBtn) {
+        playBtn.click(); // simula il click sul pulsante PLAY
+      }
+    }
+  });
+</script>
   <footer>
     Ekiller
   </footer>
